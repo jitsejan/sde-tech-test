@@ -6,21 +6,21 @@ reset-db: down set-permissions
 	rm -rfv db-data
 
 build: reset-db
-	docker-compose down
-	docker-compose build --no-cache
+	podman-compose down
+	podman-compose build --no-cache
 
 set-permissions:
 	mkdir -p db-data
 	chmod -R 777 db-data
 
 up: set-permissions
-	docker-compose up -d
+	podman-compose up -d
 
 down:
-	docker-compose down
+	podman-compose down
 
 shell:
-	docker-compose exec core bash -c "cd /opt/src; exec bash"
+	podman-compose exec core bash -c "cd /opt/src; exec bash"
 
 postgres-shell:
-	docker-compose exec postgres bash
+	podman-compose exec postgres bash
