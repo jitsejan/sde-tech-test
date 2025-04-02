@@ -2,3 +2,10 @@ db-data/
 src/logs/
 .idea/
 src/.*
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Dagster local state
+.dagster/
