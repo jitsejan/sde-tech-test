@@ -1,29 +1,36 @@
 from fabric import task
 import os
-import subprocess
+
+PROJECT_ROOT = os.path.dirname(__file__)
+SRC_PATH = os.path.join(PROJECT_ROOT, "src")
 
 
 @task
-def dagster_dev(c):
-    """Start Dagster dev server met juiste omgeving"""
-    project_root = os.getcwd()
-    dagster_home = f"{project_root}/src/midnite_pipeline/.dagster"
-    pythonpath = f"{project_root}/src"
-
-    env = {
-        "PYTHONPATH": pythonpath,
-        "DAGSTER_HOME": dagster_home,
-    }
-
-    cmd = "dagster dev -f src/midnite_pipeline/midnite_pipeline/definitions.py"
-    c.run(cmd, env=env, pty=True)
+def clean(c):
+    """Remove pyc and Dagster state files."""
+    print("🧹 Cleaning __pycache__ and Dagster state...")
+    c.run(f"find {SRC_PATH} -type d -name '__pycache__' -exec rm -rf {{}} +", warn=True)
+    c.run(f"find {SRC_PATH} -type f -name '*.pyc' -delete", warn=True)
+    c.run(f"rm -rf {SRC_PATH}/midnite_pipeline/.dagster", warn=True)
 
 
 @task
-def dbt_compile(c):
-    """Run dbt compile inside core container"""
-    subprocess.run(
-        'podman exec senior-data-engineer-technical-test_core_1 bash -c "cd /opt/src/analytics && dbt deps && dbt compile"',
-        shell=True,
-        check=True,
-    )
+def kill(c):
+    """Stop all containers and remove volumes."""
+    print("🛑 Stopping containers...")
+    c.run("podman-compose down -v", warn=True)
+
+
+@task
+def up(c):
+    """Start Dagster via podman-compose."""
+    print("🚀 Starting Dagster...")
+    c.run("podman-compose up --build")
+
+
+@task
+def restart(c):
+    """Kill, clean, and bring up fresh containers."""
+    kill(c)
+    clean(c)
+    up(c)
