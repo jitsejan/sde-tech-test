@@ -1,4 +1,23 @@
 version: 2
 
 models:
-  - name: dummy_model
+  - name: core_users
+    description: User details
+    columns:
+      - name: user_id
+        description: Unique ID for the user
+      - name: full_name
+      - name: email
+      - name: address
+  - name: core_bets
+    description: Cleaned and validated bets with enriched fields
+    columns:
+      - name: bet_id
+        description: Unique identifier for the bet
+      - name: user_id
+      - name: stake
+      - name: profit_and_loss
+      - name: currency
+      - name: game_id
+      - name: bet_timestamp
+
