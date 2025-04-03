@@ -1,7 +1,9 @@
+.DS_Store
 db-data/
 src/logs/
 .idea/
 src/.*
+src/landed_files/*.csv
 
 # Python
 __pycache__/

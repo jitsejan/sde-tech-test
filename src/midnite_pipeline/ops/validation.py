@@ -1,13 +1,15 @@
 import pandas as pd
 
 EXPECTED_COLUMNS = {
-    "bet_id": "int64",
+    "id": "int64",
     "user_id": "int64",
-    "stake": "float64",
-    "profit_and_loss": "float64",
+    "bet_outcome_id": "float64",  # can be NaN
     "game_id": "int64",
-    "currency": "object",
-    "bet_timestamp": "datetime64[ns]"
+    "wager": "float64",
+    "is_cash_wager": "bool",
+    "winnings": "float64",        # can be NaN
+    "created_at": "datetime64[ns]",
+    "settled_at": "datetime64[ns]"  # can be NaT
 }
 
 def validate_bets_dataframe(df: pd.DataFrame, context) -> pd.DataFrame:
@@ -18,7 +20,21 @@ def validate_bets_dataframe(df: pd.DataFrame, context) -> pd.DataFrame:
         raise ValueError(f"Column mismatch:\n Expected: {expected_columns}\n Actual: {actual_columns}")
 
     try:
-        df = df.astype(EXPECTED_COLUMNS)
+        # Parse datetimes (allow NaT for settled_at)
+        df["created_at"] = pd.to_datetime(df["created_at"], errors="raise")
+        df["settled_at"] = pd.to_datetime(df["settled_at"], errors="coerce")
+
+        # Cast remaining columns
+        df = df.astype({
+            "id": "int64",
+            "user_id": "int64",
+            "bet_outcome_id": "float64",  # float64 handles NaN
+            "game_id": "int64",
+            "wager": "float64",
+            "is_cash_wager": "bool",
+            "winnings": "float64"
+        })
+
     except Exception as e:
         raise ValueError(f"Type conversion failed: {e}")
 

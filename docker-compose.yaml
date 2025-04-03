@@ -4,10 +4,9 @@ services:
       dockerfile: ./Dockerfile
     tty: true
     environment:
-      - PYTHONPATH=/opt/src
+      PYTHONPATH: /opt/src
     volumes:
       - "${PWD}/src:/opt/src/"
-      - "${PWD}/landed_files:/opt/landed_files"
       - "${PWD}/.env:/opt/src/.env"
     working_dir: /opt/src/
     ports:
@@ -23,6 +22,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: analytics
+      PGUSER: postgres
     ports:
       - "54322:5432"
     volumes:

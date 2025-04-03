@@ -11,17 +11,18 @@ def insert_csv_to_postgres(context, file_path: str):
     try:
         df = validate_bets_dataframe(df, context)
     except Exception as e:
-        context.log.error(f"❌ Validation error: {e}")
+        context.log.error(f"Validation error: {e}")
         raise
 
     engine = context.resources.db.get_engine()
 
     try:
-        df.to_sql(table="bet",
+        df.to_sql("bet",
                   con=engine,
                   schema="raw",
-                  if_exists="append", index=False)
-        context.log.info(f"✅ {len(df)} rows added to raw.bet")
+                  if_exists="replace",
+                  index=False)
+        context.log.info(f"{len(df)} rows added to raw.bet")
     except Exception as e:
-        context.log.error(f"❌ Insert failed: {e}")
+        context.log.error(f"Insert failed: {e}")
         raise
