@@ -25,7 +25,7 @@ def kill(c):
 def up(c):
     """Start Dagster via podman-compose."""
     print("🚀 Starting Dagster...")
-    c.run("podman-compose up --build")
+    c.run("podman-compose up --build --no-cache")
 
 
 @task
