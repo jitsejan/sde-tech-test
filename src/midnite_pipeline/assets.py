@@ -3,6 +3,7 @@ from dagster_dbt import dbt_assets
 
 from midnite_pipeline.constants import dbt_manifest_path
 
+
 @dbt_assets(
     manifest=dbt_manifest_path,
     required_resource_keys={"dbt"},

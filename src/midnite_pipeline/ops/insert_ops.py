@@ -1,7 +1,8 @@
-from dagster import op
 import pandas as pd
-from midnite_pipeline.resources import PostgresResource
+from dagster import op
+
 from midnite_pipeline.ops.validation import validate_bets_dataframe
+
 
 @op(required_resource_keys={"db"})
 def insert_csv_to_postgres(context, file_path: str):
@@ -17,11 +18,7 @@ def insert_csv_to_postgres(context, file_path: str):
     engine = context.resources.db.get_engine()
 
     try:
-        df.to_sql("bet",
-                  con=engine,
-                  schema="raw",
-                  if_exists="replace",
-                  index=False)
+        df.to_sql("bet", con=engine, schema="raw", if_exists="replace", index=False)
         context.log.info(f"{len(df)} rows added to raw.bet")
     except Exception as e:
         context.log.error(f"Insert failed: {e}")

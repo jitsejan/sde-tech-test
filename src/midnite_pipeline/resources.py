@@ -1,8 +1,9 @@
 from dagster import ConfigurableResource
-from sqlalchemy import create_engine
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
 
 load_dotenv()
+
 
 class PostgresResource(ConfigurableResource):
     user: str
