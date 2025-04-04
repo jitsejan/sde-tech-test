@@ -1,5 +1,51 @@
 # Midnite Senior Data Engineer Technical Take Home
 
+## How to run project?
+
+### 1. Install system dependencies (macOS)
+
+```bash
+brew install podman podman-compose
+brew install rye
+```
+
+### 2. Set up Python environment
+
+```bash
+rye sync
+```
+
+
+### 3. Start the local environment
+
+Use Fabric to spin up all services and the Dagster UI:
+
+```bash
+fab restart
+```
+
+This command:
+- Starts Podman containers for `postgres` and `dagster`
+- Mounts your local source code
+- Builds the Dagster job pipeline
+
+### 4. Open Dagster UI
+
+Once started, visit:
+
+```
+http://localhost:3000
+```
+
+From there you can:
+- View jobs (`insert_bets_job`)
+- Trigger manual runs
+- Explore asset lineage
+- Check logs and schedules
+
+Make sure you’ve mounted volumes correctly, or changes won’t be reflected inside the container. This setup gives you a fast, containerized development experience with Dagster, dbt, and Postgres.
+
+
 ## Challenge Goal
 
 This technical challenge is designed to allow you to showcase your Python, SQL and general data engineering skills.
