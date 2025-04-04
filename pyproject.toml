@@ -6,12 +6,11 @@ authors = [
     { name = "Jitse-Jan", email = "jitsejan@protonmail.com" }
 ]
 dependencies = [
-    "dagster>=1.10.7",
     "dagster-webserver>=1.10.7",
     "pandas>=2.2.3",
     "python-dotenv>=1.1.0",
     "fabric>=3.2.2",
-    "dagster-dbt==0.25.8",
+    "pre-commit>=4.2.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
