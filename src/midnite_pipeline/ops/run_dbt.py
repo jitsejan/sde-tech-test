@@ -1,5 +1,5 @@
 from dagster import op
-from dagster_dbt import DbtCliResource
+
 
 @op(required_resource_keys={"dbt"})
 def run_dbt_build(context):

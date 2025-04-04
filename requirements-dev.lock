@@ -10,6 +10,10 @@
 #   universal: false
 
 -e file:.
+agate==1.9.1
+    # via dbt-adapters
+    # via dbt-common
+    # via dbt-core
 alembic==1.15.2
     # via dagster
 annotated-types==0.7.0
@@ -20,6 +24,11 @@ anyio==4.9.0
     # via gql
     # via starlette
     # via watchfiles
+attrs==25.3.0
+    # via jsonschema
+    # via referencing
+babel==2.17.0
+    # via agate
 backoff==2.2.1
     # via gql
 bcrypt==4.3.0
@@ -36,24 +45,47 @@ charset-normalizer==3.4.1
 click==8.1.8
     # via dagster
     # via dagster-webserver
+    # via dbt-core
+    # via dbt-semantic-interfaces
+    # via typer
     # via uvicorn
+colorama==0.4.6
+    # via dbt-common
 coloredlogs==14.0
     # via dagster
 cryptography==44.0.2
     # via paramiko
-dagster==1.10.7
+daff==1.3.46
+    # via dbt-core
+dagster==1.10.8
+    # via dagster-dbt
     # via dagster-graphql
     # via dagster-webserver
-dagster-graphql==1.10.7
-    # via dagster-webserver
-dagster-pipes==1.10.7
-    # via dagster
-dagster-shared==0.26.7
-    # via dagster
-dagster-webserver==1.10.7
+dagster-dbt==0.26.8
     # via senior-data-engineer-technical-test
+dagster-graphql==1.10.8
+    # via dagster-webserver
+dagster-pipes==1.10.8
+    # via dagster
+dagster-shared==0.26.8
+    # via dagster
+dagster-webserver==1.10.8
+    # via senior-data-engineer-technical-test
+dbt-adapters==1.14.4
+    # via dbt-core
+dbt-common==1.17.0
+    # via dbt-adapters
+    # via dbt-core
+dbt-core==1.9.4
+    # via dagster-dbt
+dbt-extractor==0.5.1
+    # via dbt-core
+dbt-semantic-interfaces==0.7.4
+    # via dbt-core
 decorator==5.2.1
     # via fabric
+deepdiff==7.0.1
+    # via dbt-common
 deprecated==1.2.18
     # via fabric
 distlib==0.3.9
@@ -94,10 +126,28 @@ idna==3.10
     # via anyio
     # via requests
     # via yarl
+importlib-metadata==6.11.0
+    # via dbt-semantic-interfaces
+iniconfig==2.1.0
+    # via pytest
 invoke==2.2.0
     # via fabric
+isodate==0.6.1
+    # via agate
+    # via dbt-common
 jinja2==3.1.6
     # via dagster
+    # via dagster-dbt
+    # via dbt-common
+    # via dbt-core
+    # via dbt-semantic-interfaces
+jsonschema==4.23.0
+    # via dbt-common
+    # via dbt-semantic-interfaces
+jsonschema-specifications==2024.10.1
+    # via jsonschema
+leather==0.4.0
+    # via agate
 mako==1.3.9
     # via alembic
 markdown-it-py==3.0.0
@@ -105,72 +155,135 @@ markdown-it-py==3.0.0
 markupsafe==3.0.2
     # via jinja2
     # via mako
+mashumaro==3.14
+    # via dbt-adapters
+    # via dbt-common
+    # via dbt-core
 mdurl==0.1.2
     # via markdown-it-py
+more-itertools==10.6.0
+    # via dbt-semantic-interfaces
+msgpack==1.1.0
+    # via mashumaro
 multidict==6.3.0
     # via yarl
+networkx==3.4.2
+    # via dagster-dbt
+    # via dbt-core
 nodeenv==1.9.1
     # via pre-commit
 numpy==2.2.4
     # via pandas
+ordered-set==4.1.0
+    # via deepdiff
+orjson==3.10.16
+    # via dagster-dbt
 packaging==24.2
+    # via dagster-dbt
     # via dagster-shared
+    # via dbt-core
+    # via pytest
 pandas==2.2.3
     # via senior-data-engineer-technical-test
 paramiko==3.5.1
     # via fabric
+parsedatetime==2.6
+    # via agate
+pathspec==0.12.1
+    # via dbt-common
+    # via dbt-core
 platformdirs==4.3.7
     # via virtualenv
+pluggy==1.5.0
+    # via pytest
 pre-commit==4.2.0
     # via senior-data-engineer-technical-test
 propcache==0.3.1
     # via yarl
 protobuf==5.29.4
     # via dagster
+    # via dbt-adapters
+    # via dbt-common
+    # via dbt-core
     # via grpcio-health-checking
 pycparser==2.22
     # via cffi
 pydantic==2.11.1
     # via dagster-shared
+    # via dbt-semantic-interfaces
 pydantic-core==2.33.0
     # via pydantic
 pygments==2.19.1
     # via rich
 pynacl==1.5.0
     # via paramiko
+pytest==8.3.5
 python-dateutil==2.9.0.post0
+    # via dbt-common
+    # via dbt-semantic-interfaces
     # via graphene
     # via pandas
 python-dotenv==1.1.0
     # via dagster
     # via senior-data-engineer-technical-test
     # via uvicorn
+python-slugify==8.0.4
+    # via agate
+pytimeparse==1.1.8
+    # via agate
 pytz==2025.2
     # via dagster
+    # via dbt-adapters
+    # via dbt-core
     # via pandas
 pyyaml==6.0.2
     # via dagster-shared
+    # via dbt-core
+    # via dbt-semantic-interfaces
     # via pre-commit
     # via uvicorn
+referencing==0.36.2
+    # via jsonschema
+    # via jsonschema-specifications
 requests==2.32.3
     # via dagster
+    # via dagster-dbt
     # via dagster-graphql
+    # via dbt-common
+    # via dbt-core
     # via gql
     # via requests-toolbelt
+    # via snowplow-tracker
 requests-toolbelt==1.0.0
     # via gql
 rich==14.0.0
     # via dagster
+    # via dagster-dbt
+    # via typer
+rpds-py==0.24.0
+    # via jsonschema
+    # via referencing
 setuptools==78.1.0
     # via dagster
+shellingham==1.5.4
+    # via typer
 six==1.17.0
     # via dagster
+    # via isodate
     # via python-dateutil
 sniffio==1.3.1
     # via anyio
+snowplow-tracker==1.1.0
+    # via dbt-core
 sqlalchemy==2.0.40
     # via alembic
     # via dagster
+sqlglot==26.12.1
+    # via dagster-dbt
+sqlglotrs==0.4.0
+    # via sqlglot
+sqlparse==0.5.3
+    # via dbt-core
 starlette==0.46.1
     # via dagster-graphql
     # via dagster-webserver
@@ -178,20 +291,32 @@ structlog==25.2.0
     # via dagster
 tabulate==0.9.0
     # via dagster
+text-unidecode==1.3
+    # via python-slugify
 tomli==2.2.1
     # via dagster
 toposort==1.10
     # via dagster
 tqdm==4.67.1
     # via dagster
+typer==0.15.2
+    # via dagster-dbt
 typing-extensions==4.13.0
     # via alembic
     # via anyio
     # via dagster-shared
+    # via dbt-adapters
+    # via dbt-common
+    # via dbt-core
+    # via dbt-semantic-interfaces
     # via graphene
+    # via mashumaro
     # via pydantic
     # via pydantic-core
+    # via referencing
+    # via snowplow-tracker
     # via sqlalchemy
+    # via typer
     # via typing-inspection
 typing-inspection==0.4.0
     # via pydantic
@@ -217,3 +342,5 @@ wrapt==1.17.2
     # via deprecated
 yarl==1.18.3
     # via gql
+zipp==3.21.0
+    # via importlib-metadata

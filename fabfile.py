@@ -1,5 +1,6 @@
-from fabric import task
 import os
+
+from fabric import task
 
 PROJECT_ROOT = os.path.dirname(__file__)
 SRC_PATH = os.path.join(PROJECT_ROOT, "src")
@@ -34,3 +35,9 @@ def restart(c):
     kill(c)
     clean(c)
     up(c)
+
+
+@task
+def test_validation(c):
+    """Run only the validation tests."""
+    c.run("pytest tests/test_validation.py")

@@ -1,5 +1,7 @@
-from dagster import sensor, RunRequest
 from pathlib import Path
+
+from dagster import RunRequest, sensor
+
 
 @sensor(job_name="insert_bets_job")
 def new_file_sensor(context):
@@ -8,11 +10,7 @@ def new_file_sensor(context):
         return RunRequest(
             run_key=str(file),
             run_config={
-                "ops": {
-                    "insert_csv_to_postgres": {
-                        "inputs": {"file_path": str(file)}
-                    }
-                }
-            }
+                "ops": {"insert_csv_to_postgres": {"inputs": {"file_path": str(file)}}}
+            },
         )
     return None
