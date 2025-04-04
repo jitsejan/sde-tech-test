@@ -2,11 +2,96 @@ version: 2
 
 sources:
   - name: raw
-    schema: raw
     tables:
-      - name: users
-      - name: user_address
       - name: bet
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: user_id
+            tests: [not_null]
+          - name: bet_outcome_id
+          - name: game_id
+            tests: [not_null]
+          - name: wager
+            tests: [not_null]
+          - name: winnings
+          - name: is_cash_wager
+            tests: [not_null]
+          - name: created_at
+            tests: [not_null]
+          - name: settled_at
+
       - name: bet_outcome
-      - name: game
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: outcome
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['winner', 'loser', 'draw']
+
       - name: fx_rates
+        description: "Exchange rates to USD by date and currency"
+        columns:
+          - name: date
+            tests: [not_null]
+
+          - name: currency_code
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ["EUR", "GBP"]
+
+          - name: rate
+            tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0.0
+
+        tests:
+          - dbt_expectations.expect_compound_columns_to_be_unique:
+              column_list: ["date", "currency_code"]
+
+      - name: game
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: name
+            tests: [not_null]
+          - name: vertical
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['sports', 'esports', 'casino']
+          - name: created_at
+            tests: [not_null]
+
+      - name: user_address
+        columns:
+          - name: user_id
+            tests: [unique, not_null]
+          - name: address
+            tests: [not_null]
+          - name: country_code
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['GB', 'IE', 'IR']
+
+      - name: users
+        identifier: users
+        quoting:
+          column: true
+        columns:
+          - name: Name
+            tests: [not_null]
+          - name: IsTestUser
+            tests: [not_null]
+          - name: CurrencyCode
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ["EUR", "GBP"]
+          - name: CreatedAt
+            tests: [not_null]

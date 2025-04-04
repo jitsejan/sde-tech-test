@@ -8,13 +8,13 @@ services:
     volumes:
       - "${PWD}/src:/opt/src/"
       - "${PWD}/.env:/opt/src/.env"
+      - "${PWD}/entrypoint.sh:/opt/entrypoint.sh"
     working_dir: /opt/src/
     ports:
       - "3000:3000"
     depends_on:
       - postgres
-    command: ["dagster", "dev", "-h", "0.0.0.0", "-f", "midnite_pipeline/definitions.py"]
-
+    command: ["/bin/bash", "/opt/entrypoint.sh"]
   postgres:
     image: postgres:11
     restart: unless-stopped
